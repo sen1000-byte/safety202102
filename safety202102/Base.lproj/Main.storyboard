@@ -34,13 +34,49 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gw9-ef-vHS">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="Cell" reuseIdentifier="Cell" id="gw9-ef-vHS" customClass="MainCollectionViewCell" customModule="safety202102" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="140"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="00l-oi-4MD">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相手のユーザー名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGn-MA-O46">
+                                                    <rect key="frame" x="-5.5" y="10" width="139" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xtu-ff-X1w">
+                                                    <rect key="frame" x="31.5" y="39" width="65" height="65"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="xtu-ff-X1w" secondAttribute="height" multiplier="1:1" id="VSj-e1-xlm"/>
+                                                        <constraint firstAttribute="width" constant="65" id="fMp-f7-Hrq"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" image="smilefive"/>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOW-pa-m71">
+                                                    <rect key="frame" x="44.5" y="112" width="39" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="WGn-MA-O46" firstAttribute="centerX" secondItem="00l-oi-4MD" secondAttribute="centerX" id="0zV-Wr-sja"/>
+                                                <constraint firstItem="WGn-MA-O46" firstAttribute="top" secondItem="00l-oi-4MD" secondAttribute="top" constant="10" id="DZ2-wR-wHs"/>
+                                                <constraint firstItem="xtu-ff-X1w" firstAttribute="top" secondItem="WGn-MA-O46" secondAttribute="bottom" constant="8" id="LyS-ih-T29"/>
+                                                <constraint firstItem="rOW-pa-m71" firstAttribute="centerX" secondItem="00l-oi-4MD" secondAttribute="centerX" id="XnF-tc-1tT"/>
+                                                <constraint firstAttribute="bottom" secondItem="rOW-pa-m71" secondAttribute="bottom" constant="10" id="ZM9-p0-5Ov"/>
+                                                <constraint firstItem="xtu-ff-X1w" firstAttribute="centerX" secondItem="00l-oi-4MD" secondAttribute="centerX" id="e9k-sb-gtx"/>
+                                                <constraint firstItem="rOW-pa-m71" firstAttribute="top" secondItem="xtu-ff-X1w" secondAttribute="bottom" constant="8" id="riN-a0-YK8"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="friendName" destination="WGn-MA-O46" id="YHy-Rt-ctI"/>
+                                            <outlet property="smileButton" destination="xtu-ff-X1w" id="SYX-Tw-52z"/>
+                                            <outlet property="timeStamp" destination="rOW-pa-m71" id="RQg-QC-ciY"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -95,12 +131,14 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="collectionView" destination="Jev-nQ-go9" id="Nfl-wQ-vbU"/>
+                        <outlet property="collectionViewFlowLayout" destination="dKE-yz-pr8" id="oyi-ju-GqN"/>
                         <segue destination="NqU-Se-2Qj" kind="show" identifier="toSetting" id="GqV-gK-u1T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="354" y="474"/>
+            <point key="canvasLocation" x="354" y="458"/>
         </scene>
         <!--Setting Table View Controller-->
         <scene sceneID="Tds-3a-kjV">
@@ -247,8 +285,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXb-tI-Ywa">
-                                                    <rect key="frame" x="20" y="11.5" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="簡単モードに切り替える" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXb-tI-Ywa">
+                                                    <rect key="frame" x="20" y="11.5" width="191" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -651,6 +689,7 @@
     </scenes>
     <resources>
         <image name="smile" width="721" height="680.5"/>
+        <image name="smilefive" width="1441" height="1361"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -93,14 +93,6 @@ class SignUpViewController: UIViewController {
                 "usertName": usertName,
                 "email": email,
                 "updatedAt": updatedAt
-                
-//                //    let userID: String
-//                    let userName: String
-//                    let email: String
-//                    let password: String
-//                //    let active: Bool
-//                    let friends: [String] = []
-//                    let updatedAt: Timestamp
             ] as [String : Any]
             //usersのフォルダの中に、userIDが入っていて、その中にdocumentDataが貯蓄されているイメージ
             Firestore.firestore().collection("users").document(userID).setData(documentData)
