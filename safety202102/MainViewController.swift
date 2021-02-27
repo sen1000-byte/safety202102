@@ -8,6 +8,9 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    
+    var userID: String!
+    var me: AppUser!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +28,10 @@ class MainViewController: UIViewController {
     }
     
 
+    @IBAction func toSetting() {
+        performSegue(withIdentifier: "toSetting", sender: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

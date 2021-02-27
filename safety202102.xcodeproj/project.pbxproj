@@ -21,6 +21,8 @@
 		33703A8325E960AA004619DB /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A8225E960AA004619DB /* SignInViewController.swift */; };
 		33703A8825E9CE2D004619DB /* AlternateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A8725E9CE2C004619DB /* AlternateViewController.swift */; };
 		33703A9825E9D3B7004619DB /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A9725E9D3B7004619DB /* SettingTableViewController.swift */; };
+		33703A9D25EA15A2004619DB /* SettingUserNameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A9C25EA15A2004619DB /* SettingUserNameTableViewController.swift */; };
+		33703AA725EA1F03004619DB /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703AA625EA1F03004619DB /* AppUser.swift */; };
 		867D0C0E81018FE763B70611 /* Pods_safety202102Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C826DD05F919C81AC4F4EFA /* Pods_safety202102Tests.framework */; };
 		A7834C170230B5F478B17590 /* Pods_safety202102_safety202102UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FBEEDFF01DCD92ECE11B2BC /* Pods_safety202102_safety202102UITests.framework */; };
 		CCBA2FB82E22D67C1CFD04E4 /* Pods_safety202102.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC20786D1F158CDD74DC8BF /* Pods_safety202102.framework */; };
@@ -65,6 +67,8 @@
 		33703A8225E960AA004619DB /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		33703A8725E9CE2C004619DB /* AlternateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateViewController.swift; sourceTree = "<group>"; };
 		33703A9725E9D3B7004619DB /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
+		33703A9C25EA15A2004619DB /* SettingUserNameTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUserNameTableViewController.swift; sourceTree = "<group>"; };
+		33703AA625EA1F03004619DB /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		4C826DD05F919C81AC4F4EFA /* Pods_safety202102Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_safety202102Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5912135AF1552D2F1AA265DA /* Pods-safety202102-safety202102UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safety202102-safety202102UITests.debug.xcconfig"; path = "Target Support Files/Pods-safety202102-safety202102UITests/Pods-safety202102-safety202102UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5E7B2DD5B5563297A43A56E5 /* Pods-safety202102.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safety202102.debug.xcconfig"; path = "Target Support Files/Pods-safety202102/Pods-safety202102.debug.xcconfig"; sourceTree = "<group>"; };
@@ -141,6 +145,8 @@
 				33703A4F25E8C44A004619DB /* MainViewController.swift */,
 				33703A8725E9CE2C004619DB /* AlternateViewController.swift */,
 				33703A9725E9D3B7004619DB /* SettingTableViewController.swift */,
+				33703AA525EA1EE2004619DB /* Models */,
+				33703AA125EA1D8F004619DB /* Settings */,
 			);
 			path = safety202102;
 			sourceTree = "<group>";
@@ -161,6 +167,22 @@
 				33703A3B25E7E48F004619DB /* Info.plist */,
 			);
 			path = safety202102UITests;
+			sourceTree = "<group>";
+		};
+		33703AA125EA1D8F004619DB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				33703A9C25EA15A2004619DB /* SettingUserNameTableViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		33703AA525EA1EE2004619DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				33703AA625EA1F03004619DB /* AppUser.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		40EDFB326E877065E24766A9 /* Pods */ = {
@@ -425,11 +447,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33703A9D25EA15A2004619DB /* SettingUserNameTableViewController.swift in Sources */,
 				33703A9825E9D3B7004619DB /* SettingTableViewController.swift in Sources */,
 				33703A1C25E7E48C004619DB /* ViewController.swift in Sources */,
 				33703A1825E7E48C004619DB /* AppDelegate.swift in Sources */,
 				33703A8325E960AA004619DB /* SignInViewController.swift in Sources */,
 				33703A4B25E8C028004619DB /* SignUpViewController.swift in Sources */,
+				33703AA725EA1F03004619DB /* AppUser.swift in Sources */,
 				33703A1A25E7E48C004619DB /* SceneDelegate.swift in Sources */,
 				33703A8825E9CE2D004619DB /* AlternateViewController.swift in Sources */,
 				33703A5025E8C44A004619DB /* MainViewController.swift in Sources */,

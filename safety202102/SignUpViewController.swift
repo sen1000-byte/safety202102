@@ -37,8 +37,9 @@ class SignUpViewController: UIViewController {
         registerButton.backgroundColor = UIColor.lightGray
 
         // Do any additional setup after loading the view.
-        if Auth.auth().currentUser != nil {
-            toMain()
+        if let user = Auth.auth().currentUser {
+            let userID = user.uid
+            toMain(userID: userID)
         }
     }
     
@@ -48,12 +49,14 @@ class SignUpViewController: UIViewController {
 
     }
     
-    func toMain() {
+    func toMain(userID: String) {
         //２つ先へ一気に遷移
         let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
         let vc3 = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         // 遷移後のViewControllerの配列を作成
         let ar = [self, vc2, vc3]
+        //データの受け渡し
+        vc3.userID = userID
         // まとめて設定
         self.navigationController?.setViewControllers(ar, animated: false)
     }
@@ -73,6 +76,7 @@ class SignUpViewController: UIViewController {
         guard let usertName = userNameTextField.text else {return}
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
+        let updatedAt = Timestamp()
         
         //新しいユーザーを登録する
         //Authenticationに追加
@@ -88,13 +92,22 @@ class SignUpViewController: UIViewController {
             let documentData = [
                 "usertName": usertName,
                 "email": email,
-            ]
+                "updatedAt": updatedAt
+                
+//                //    let userID: String
+//                    let userName: String
+//                    let email: String
+//                    let password: String
+//                //    let active: Bool
+//                    let friends: [String] = []
+//                    let updatedAt: Timestamp
+            ] as [String : Any]
             //usersのフォルダの中に、userIDが入っていて、その中にdocumentDataが貯蓄されているイメージ
             Firestore.firestore().collection("users").document(userID).setData(documentData)
             
 //            self.performSegue(withIdentifier: "toMain", sender: nil)
             //２つ先へ一気に遷移
-            self.toMain()
+            self.toMain(userID: userID)
         }
         
     }

@@ -1,25 +1,22 @@
 //
-//  SettingTableViewController.swift
+//  SettingUserNameTableViewController.swift
 //  safety202102
 //
 //  Created by Chihiro Nishiwaki on 2021/02/27.
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
 
-class SettingTableViewController: UITableViewController {
+class SettingUserNameTableViewController: UITableViewController {
     
-    @IBOutlet var userNameLabel: UILabel!
-    @IBOutlet var emailLabel: UILabel!
-    @IBOutlet var easyModeSwitch: UISwitch!
+    @IBOutlet var nowUserNameLabel: UILabel!
+    @IBOutlet var newUserNameTextField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView.backgroundColor = UIColor(red: 208 / 255, green: 230 / 255, blue: 153 / 255, alpha: 1)
 
+        newUserNameTextField.delegate = self
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -31,34 +28,12 @@ class SettingTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 3
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        switch section {
-        case 0:
-            return 4
-        case 1:
-            return 2
-        case 2:
-            return 1
-        default:
-            return 0
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //logoutをsection0のrow3に実装
-        if indexPath.section == 0 && indexPath.row == 3 {
-            let alert = UIAlertController(title: "ログアウトしますか？", message: "はいを押すとログアウトします", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { action in
-                try? Auth.auth().signOut()
-                self.navigationController?.popToRootViewController(animated: true)
-            }))
-            alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
-            present(alert, animated: true, completion: nil)
-        }
+        return 1
     }
 
     /*
@@ -116,4 +91,12 @@ class SettingTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension SettingUserNameTableViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }

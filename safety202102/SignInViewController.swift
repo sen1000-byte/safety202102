@@ -46,6 +46,8 @@ class SignInViewController: UIViewController {
                 return
             }
             let nVC = self?.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+            guard let userID = authResult?.user.uid else {return}
+            nVC.userID = userID
             self?.navigationController?.pushViewController(nVC, animated: false)
 //            dismiss(animated: true, completion: { [presentingViewController]() -> Void in
 //                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ViewController3")
