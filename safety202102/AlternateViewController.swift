@@ -1,25 +1,19 @@
 //
-//  MainViewController.swift
+//  AlternateViewController.swift
 //  safety202102
 //
-//  Created by Chihiro Nishiwaki on 2021/02/26.
+//  Created by Chihiro Nishiwaki on 2021/02/27.
 //
 
 import UIKit
 
-class MainViewController: UIViewController {
+class AlternateViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationItem.hidesBackButton = true
-        
-//        //アカウント登録画面を表示させる
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let signUpStoryboard = storyboard.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
-//        signUpStoryboard.modalPresentationStyle = .fullScreen
-//        self.present(signUpStoryboard, animated: true, completion: nil)
 
         // Do any additional setup after loading the view.
     }

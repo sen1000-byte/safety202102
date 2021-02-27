@@ -25,6 +25,8 @@ class SignUpViewController: UIViewController {
         registerButton.layer.shadowOffset = CGSize(width: 1, height: 1)
         registerButton.layer.shadowRadius = 3
         registerButton.layer.shadowOpacity = 1
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
 
         userNameTextField.delegate = self
         emailTextField.delegate = self
@@ -35,6 +37,25 @@ class SignUpViewController: UIViewController {
         registerButton.backgroundColor = UIColor.lightGray
 
         // Do any additional setup after loading the view.
+        if Auth.auth().currentUser != nil {
+            toMain()
+        }
+    }
+    
+    //ログインしていた場合に画面を飛ばす
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+    }
+    
+    func toMain() {
+        //２つ先へ一気に遷移
+        let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+        let vc3 = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+        // 遷移後のViewControllerの配列を作成
+        let ar = [self, vc2, vc3]
+        // まとめて設定
+        self.navigationController?.setViewControllers(ar, animated: false)
     }
     
 
@@ -70,12 +91,17 @@ class SignUpViewController: UIViewController {
             ]
             //usersのフォルダの中に、userIDが入っていて、その中にdocumentDataが貯蓄されているイメージ
             Firestore.firestore().collection("users").document(userID).setData(documentData)
+            
+//            self.performSegue(withIdentifier: "toMain", sender: nil)
+            //２つ先へ一気に遷移
+            self.toMain()
         }
         
     }
     
     
     @IBAction func alreadyHave(_ sender: Any) {
+        performSegue(withIdentifier: "toSignIn", sender: nil)
     }
 }
 

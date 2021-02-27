@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,9 @@
 		33703A4B25E8C028004619DB /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A4A25E8C028004619DB /* SignUpViewController.swift */; };
 		33703A5025E8C44A004619DB /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A4F25E8C44A004619DB /* MainViewController.swift */; };
 		33703A5525E8CCAF004619DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33703A5425E8CCAF004619DB /* GoogleService-Info.plist */; };
+		33703A8325E960AA004619DB /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A8225E960AA004619DB /* SignInViewController.swift */; };
+		33703A8825E9CE2D004619DB /* AlternateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A8725E9CE2C004619DB /* AlternateViewController.swift */; };
+		33703A9825E9D3B7004619DB /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A9725E9D3B7004619DB /* SettingTableViewController.swift */; };
 		867D0C0E81018FE763B70611 /* Pods_safety202102Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C826DD05F919C81AC4F4EFA /* Pods_safety202102Tests.framework */; };
 		A7834C170230B5F478B17590 /* Pods_safety202102_safety202102UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FBEEDFF01DCD92ECE11B2BC /* Pods_safety202102_safety202102UITests.framework */; };
 		CCBA2FB82E22D67C1CFD04E4 /* Pods_safety202102.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC20786D1F158CDD74DC8BF /* Pods_safety202102.framework */; };
@@ -59,6 +62,9 @@
 		33703A4A25E8C028004619DB /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		33703A4F25E8C44A004619DB /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		33703A5425E8CCAF004619DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		33703A8225E960AA004619DB /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		33703A8725E9CE2C004619DB /* AlternateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateViewController.swift; sourceTree = "<group>"; };
+		33703A9725E9D3B7004619DB /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		4C826DD05F919C81AC4F4EFA /* Pods_safety202102Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_safety202102Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5912135AF1552D2F1AA265DA /* Pods-safety202102-safety202102UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safety202102-safety202102UITests.debug.xcconfig"; path = "Target Support Files/Pods-safety202102-safety202102UITests/Pods-safety202102-safety202102UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5E7B2DD5B5563297A43A56E5 /* Pods-safety202102.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safety202102.debug.xcconfig"; path = "Target Support Files/Pods-safety202102/Pods-safety202102.debug.xcconfig"; sourceTree = "<group>"; };
@@ -131,7 +137,10 @@
 				33703A2225E7E48E004619DB /* LaunchScreen.storyboard */,
 				33703A2525E7E48E004619DB /* Info.plist */,
 				33703A4A25E8C028004619DB /* SignUpViewController.swift */,
+				33703A8225E960AA004619DB /* SignInViewController.swift */,
 				33703A4F25E8C44A004619DB /* MainViewController.swift */,
+				33703A8725E9CE2C004619DB /* AlternateViewController.swift */,
+				33703A9725E9D3B7004619DB /* SettingTableViewController.swift */,
 			);
 			path = safety202102;
 			sourceTree = "<group>";
@@ -164,7 +173,6 @@
 				93FA50F54EEC0DEA564E9AE8 /* Pods-safety202102Tests.debug.xcconfig */,
 				E09DB7CCFD60F516A6A53C89 /* Pods-safety202102Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -417,10 +425,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33703A9825E9D3B7004619DB /* SettingTableViewController.swift in Sources */,
 				33703A1C25E7E48C004619DB /* ViewController.swift in Sources */,
 				33703A1825E7E48C004619DB /* AppDelegate.swift in Sources */,
+				33703A8325E960AA004619DB /* SignInViewController.swift in Sources */,
 				33703A4B25E8C028004619DB /* SignUpViewController.swift in Sources */,
 				33703A1A25E7E48C004619DB /* SceneDelegate.swift in Sources */,
+				33703A8825E9CE2D004619DB /* AlternateViewController.swift in Sources */,
 				33703A5025E8C44A004619DB /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
