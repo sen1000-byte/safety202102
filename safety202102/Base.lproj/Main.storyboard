@@ -313,10 +313,104 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="xjt-sQ-CeU"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <segue destination="25V-uI-iQ3" kind="presentation" identifier="toSearch" id="WVL-r0-ckZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jnN-er-2T5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1264" y="92"/>
+        </scene>
+        <!--Search View Controller-->
+        <scene sceneID="YVx-lK-IGj">
+            <objects>
+                <viewController id="25V-uI-iQ3" customClass="SearchViewController" customModule="safety202102" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YHh-6Q-XCN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相手を検索する" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ztt-Ke-iDW">
+                                <rect key="frame" x="135.5" y="100" width="143" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="相手のユーザー名を入力してください" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BBc-5i-LCL">
+                                <rect key="frame" x="30" y="200" width="354" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Mb-ox-YzI">
+                                <rect key="frame" x="60" y="374" width="294" height="45"/>
+                                <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="ppy-CK-pVJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="検索する">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="seach" destination="25V-uI-iQ3" eventType="touchUpInside" id="aoe-EP-4DK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmx-ni-M18">
+                                <rect key="frame" x="156" y="449" width="102" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="キャンセル"/>
+                                <connections>
+                                    <action selector="cancel" destination="25V-uI-iQ3" eventType="touchUpInside" id="AhB-8B-3uU"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="相手のメールアドレスを入力してください" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Ax-TJ-69G">
+                                <rect key="frame" x="30" y="290" width="354" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相手のユーザー名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rt0-fT-fqo">
+                                <rect key="frame" x="30" y="174" width="123" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相手のメールアドレス" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATd-me-PAX">
+                                <rect key="frame" x="30" y="264" width="153" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mMd-du-aUo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2Ax-TJ-69G" firstAttribute="leading" secondItem="ATd-me-PAX" secondAttribute="leading" id="3H5-X9-lLs"/>
+                            <constraint firstItem="dmx-ni-M18" firstAttribute="centerX" secondItem="YHh-6Q-XCN" secondAttribute="centerX" id="AHE-Ca-4GD"/>
+                            <constraint firstItem="2Mb-ox-YzI" firstAttribute="leading" secondItem="mMd-du-aUo" secondAttribute="leading" constant="60" id="PYy-yY-jLc"/>
+                            <constraint firstItem="dmx-ni-M18" firstAttribute="top" secondItem="2Mb-ox-YzI" secondAttribute="bottom" constant="30" id="Plv-BD-Ct0"/>
+                            <constraint firstItem="2Ax-TJ-69G" firstAttribute="leading" secondItem="mMd-du-aUo" secondAttribute="leading" constant="30" id="Tp8-dL-AeL"/>
+                            <constraint firstItem="BBc-5i-LCL" firstAttribute="top" secondItem="rt0-fT-fqo" secondAttribute="bottom" constant="8" id="VVb-or-K0M"/>
+                            <constraint firstItem="BBc-5i-LCL" firstAttribute="leading" secondItem="rt0-fT-fqo" secondAttribute="leading" id="W5G-ZB-sxR"/>
+                            <constraint firstItem="mMd-du-aUo" firstAttribute="trailing" secondItem="2Mb-ox-YzI" secondAttribute="trailing" constant="60" id="Wk2-vs-6ZR"/>
+                            <constraint firstItem="rt0-fT-fqo" firstAttribute="top" secondItem="ztt-Ke-iDW" secondAttribute="bottom" constant="50" id="Ydn-Xy-rnB"/>
+                            <constraint firstItem="mMd-du-aUo" firstAttribute="trailing" secondItem="BBc-5i-LCL" secondAttribute="trailing" constant="30" id="Zle-CF-xVs"/>
+                            <constraint firstItem="BBc-5i-LCL" firstAttribute="leading" secondItem="mMd-du-aUo" secondAttribute="leading" constant="30" id="biC-Qi-fsA"/>
+                            <constraint firstItem="mMd-du-aUo" firstAttribute="trailing" secondItem="2Ax-TJ-69G" secondAttribute="trailing" constant="30" id="gN9-Lz-TqS"/>
+                            <constraint firstItem="2Mb-ox-YzI" firstAttribute="top" secondItem="2Ax-TJ-69G" secondAttribute="bottom" constant="50" id="nRX-rK-F9B"/>
+                            <constraint firstItem="ztt-Ke-iDW" firstAttribute="centerX" secondItem="YHh-6Q-XCN" secondAttribute="centerX" id="ohT-di-iKd"/>
+                            <constraint firstItem="ztt-Ke-iDW" firstAttribute="top" secondItem="mMd-du-aUo" secondAttribute="top" constant="100" id="u3j-DR-xjS"/>
+                            <constraint firstItem="2Ax-TJ-69G" firstAttribute="top" secondItem="ATd-me-PAX" secondAttribute="bottom" constant="8" id="vAr-P2-Ecb"/>
+                            <constraint firstItem="ATd-me-PAX" firstAttribute="top" secondItem="BBc-5i-LCL" secondAttribute="bottom" constant="30" id="yLo-LO-COi"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="searchButton" destination="2Mb-ox-YzI" id="hhJ-K6-iek"/>
+                        <outlet property="searchEmailTextField" destination="2Ax-TJ-69G" id="F1m-iU-iCA"/>
+                        <outlet property="searchNameTextField" destination="BBc-5i-LCL" id="pGx-nM-QUY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fFz-EU-xJX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2173.913043478261" y="91.741071428571431"/>
         </scene>
         <!--ユーザー名の編集-->
         <scene sceneID="ZbA-Fg-pfv">

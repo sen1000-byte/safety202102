@@ -14,11 +14,14 @@ class SettingTableViewController: UITableViewController {
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var emailLabel: UILabel!
     @IBOutlet var easyModeSwitch: UISwitch!
+    
+    var userID: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.backgroundColor = UIColor(red: 208 / 255, green: 230 / 255, blue: 153 / 255, alpha: 1)
+        easyModeSwitch.isOn = false
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -29,6 +32,16 @@ class SettingTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
+    
+    @IBAction func easyMode(sender: UISwitch) {
+        if sender.isOn {
+            
+        }else{
+            
+        }
+    }
+    
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 3
@@ -58,6 +71,18 @@ class SettingTableViewController: UITableViewController {
             }))
             alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
             present(alert, animated: true, completion: nil)
+        }
+        
+        if indexPath.section == 1 && indexPath.row == 1 {
+            performSegue(withIdentifier: "toSearch", sender: userID)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toSearch" {
+            let nVC = segue.destination as! SearchViewController
+            nVC.userID = sender as! String
+            print(nVC.userID)
         }
     }
 

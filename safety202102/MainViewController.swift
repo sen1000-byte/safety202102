@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
 
 class MainViewController: UIViewController {
     
@@ -31,6 +33,16 @@ class MainViewController: UIViewController {
         collectionViewFlowLayout.minimumInteritemSpacing = 10
         collectionViewFlowLayout.estimatedItemSize = CGSize(width: collectionView.frame.width / 2 - 30, height: collectionView.frame.width / 2 - 20)
         
+        //firebase firestoreから情報の引き出し
+        Firestore.firestore().collection("users").document(userID).getDocument { (snap, error) in
+            if let error = error {
+                print("firestoreからのデータの取得に失敗\(error)")
+                return
+            }
+            guard let data = snap?.data() else {return}
+            self.me = AppUser.init(data: data)
+        }
+        
 //        //アカウント登録画面を表示させる
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //        let signUpStoryboard = storyboard.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
@@ -42,7 +54,17 @@ class MainViewController: UIViewController {
     
 
     @IBAction func toSetting() {
-        performSegue(withIdentifier: "toSetting", sender: nil)
+        performSegue(withIdentifier: "toSetting", sender: userID)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toSetting" {
+            let nVC = segue.destination as! SettingTableViewController
+            nVC.userID = sender as? String ?? ""
+            print(nVC.userID)
+            print(sender)
+            print(userID)
+        }
     }
     
     /*

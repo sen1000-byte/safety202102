@@ -90,9 +90,10 @@ class SignUpViewController: UIViewController {
             guard let userID = authResult?.user.uid else { return }
             //辞書型
             let documentData = [
-                "usertName": usertName,
+                "userName": usertName,
                 "email": email,
-                "updatedAt": updatedAt
+                "updatedAt": updatedAt,
+                "userID": userID
             ] as [String : Any]
             //usersのフォルダの中に、userIDが入っていて、その中にdocumentDataが貯蓄されているイメージ
             Firestore.firestore().collection("users").document(userID).setData(documentData)
@@ -106,6 +107,9 @@ class SignUpViewController: UIViewController {
     
     
     @IBAction func alreadyHave(_ sender: Any) {
+        userNameTextField.text = ""
+        emailTextField.text = ""
+        passwordTextField.text = ""
         performSegue(withIdentifier: "toSignIn", sender: nil)
     }
 }

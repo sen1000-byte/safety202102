@@ -58,7 +58,7 @@ class SignInViewController: UIViewController {
     }
     
     @IBAction func didnotHave() {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     

@@ -8,6 +8,11 @@
 import UIKit
 
 class AlternateViewController: UIViewController {
+    
+    @IBOutlet var whetherLabel: UILabel!
+    
+    var userID: String!
+    var me: AppUser!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +21,10 @@ class AlternateViewController: UIViewController {
         navigationItem.hidesBackButton = true
 
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func smile() {
+        
     }
     
 
