@@ -8,14 +8,17 @@
 import Foundation
 import FirebaseFirestore
 
-struct Connect {
+class Connect {
     let members: [String]
     let createdAt: Timestamp
     var latestTime: Timestamp
     
+    var  partnerUser: AppUser!
+    
+    
     init(data: [String: Any?]) {
         members = data["members"] as? [String] ?? []
         createdAt = data["createdAt"] as? Timestamp ?? Timestamp()
-        latestTime: data["latestTime"] as? Timestamp ?? Timestamp()
+        latestTime = data["latestTime"] as? Timestamp ?? Timestamp()
     }
 }

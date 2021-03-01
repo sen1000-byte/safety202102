@@ -93,12 +93,25 @@ class SignUpViewController: UIViewController {
                 "userName": usertName,
                 "email": email,
                 "updatedAt": updatedAt,
-                "userID": userID
+                "userID": userID,
+                "friends": [userID]
             ] as [String : Any]
+            
+            print("docData:" , documentData)
             //usersのフォルダの中に、userIDが入っていて、その中にdocumentDataが貯蓄されているイメージ
             Firestore.firestore().collection("users").document(userID).setData(documentData)
             
-//            self.performSegue(withIdentifier: "toMain", sender: nil)
+            //自分用のactivityの作成、
+            let activityData = [
+                "userName": usertName,
+            ] as [String : Any]
+            Firestore.firestore().collection("activities").document(userID).setData(activityData)
+            
+            //リセット
+            self.userNameTextField.text = ""
+            self.emailTextField.text = ""
+            self.passwordTextField.text = ""
+            
             //２つ先へ一気に遷移
             self.toMain(userID: userID)
         }

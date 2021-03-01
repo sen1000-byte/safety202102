@@ -58,6 +58,7 @@ class SearchViewController: UIViewController {
                     print("firestoreの全ユーザ取得に失敗しました\(error)")
                     return
                 }
+
                 snapshots?.documents.forEach({ (snapshot) in
                     let data = snapshot.data()
                     let user = AppUser(data: data)
@@ -65,18 +66,18 @@ class SearchViewController: UIViewController {
                         let alert = UIAlertController(title: "検索した相手が見つかりました", message: "\(user.userName)を追加しますか", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "はい", style: .default, handler: {action in
                             self.addMyFriends(user: user)
-                            self.createNewConnection(user: user)
+//                            self.createNewConnection(user: user)
                             self.dismiss(animated: true, completion: nil)
-                            return
                         }))
                         alert.addAction(UIAlertAction(title: "いいえ", style: .destructive, handler: nil))
                         self.present(alert, animated: true, completion: nil)
-                    }else{
-                        let alert = UIAlertController(title: "エラー", message: "検索した相手が見つかりませんでした。", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
                     }
                 })
+                //見つからなかった時
+                let alert = UIAlertController(title: "エラー", message: "検索した相手が見つかりませんでした。", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                
             }
         }
     }
@@ -98,29 +99,31 @@ class SearchViewController: UIViewController {
             let alert = UIAlertController(title: "エラー", message: "すでに登録されています。", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
-            return
         }else{
         myFriends.append(user.userID)
-        Firestore.firestore().collection("users").document(user.userID).setData(["friends": myFriends], merge: true)
+            var userFriends = user.friends
+            userFriends.append(me.userID)
+            Firestore.firestore().collection("users").document(me.userID).setData(["friends": myFriends], merge: true)
+            Firestore.firestore().collection("users").document(user.userID).setData(["friends": userFriends], merge: true)
         }
     }
     
-    func createNewConnection(user: AppUser) {
-        let myUid = me.userID
-        let partnerUid = user.userID
-        let members = [myUid, partnerUid]
-        let docData = [
-            "members": members,
-            "createdAt": Timestamp(),
-            "latestTime": Timestamp()
-        ] as [String : Any]
-        Firestore.firestore().collection("connection").addDocument(data: docData) { (error) in
-            if let error = error {
-                print("connectionの情報の保存に失敗しました。\(error)")
-            }
-            
-        }
-    }
+//    func createNewConnection(user: AppUser) {
+//        let myUid = me.userID
+//        let partnerUid = user.userID
+//        let members = [myUid, partnerUid]
+//        let docData = [
+//            "members": members,
+//            "createdAt": Timestamp(),
+//            "latestTime": Timestamp()
+//        ] as [String : Any]
+//        Firestore.firestore().collection("connection").addDocument(data: docData) { (error) in
+//            if let error = error {
+//                print("connectionの情報の保存に失敗しました。\(error)")
+//            }
+//            
+//        }
+//    }
     
     //検索が一致した時に行う
     

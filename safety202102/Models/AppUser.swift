@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct AppUser {
+class AppUser {
     let userName: String
     let email: String
     let updatedAt: Timestamp
@@ -21,5 +21,6 @@ struct AppUser {
         email = data["email"] as? String ?? ""
         updatedAt = data["updatedAt"] as? Timestamp ?? Timestamp()
         userID = data["userID"] as? String ?? ""
+        friends = data["friends"] as? [String] ?? [String]()
     }
 }
