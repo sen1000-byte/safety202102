@@ -14,10 +14,10 @@ class Activity {
 //    let userID: String
     
     var latestActiveTime: Timestamp!
-    
+
     init(data: [String: Any?]) {
         userName = data["userName"] as? String ?? ""
-        latestActiveTime = data["latestActiveTime"] as? Timestamp ?? Timestamp()
+        latestActiveTime = data["latestActiveTime"] as? Timestamp ?? Timestamp(seconds: 0, nanoseconds: 0)
 //        userID = data["email"] as? String ?? ""
     }
 }

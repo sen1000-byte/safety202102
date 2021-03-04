@@ -14,6 +14,9 @@ class SignInViewController: UIViewController {
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var signInButton: UIButton!
+    
+    var userDefaults = UserDefaults.standard
+    var easyModeBool: Bool!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +33,10 @@ class SignInViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
+        easyModeBool = userDefaults.bool(forKey: "easyMode")
+        
         signInButton.isEnabled = false
         signInButton.backgroundColor = UIColor.lightGray
-
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func signIn() {
@@ -45,15 +48,10 @@ class SignInViewController: UIViewController {
                 print("ログインに失敗\(error)")
                 return
             }
-            let nVC = self?.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+            let nVC = strongSelf.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
             guard let userID = authResult?.user.uid else {return}
             nVC.userID = userID
             self?.navigationController?.pushViewController(nVC, animated: false)
-//            dismiss(animated: true, completion: { [presentingViewController]() -> Void in
-//                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ViewController3")
-//                    presentingViewController?.present(viewController!, animated: true, completion: nil)
-//                })
-//            }
         }
     }
     
@@ -61,17 +59,6 @@ class SignInViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

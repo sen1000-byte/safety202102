@@ -13,3 +13,7 @@ class MainCollectionViewCell: UICollectionViewCell {
     @IBOutlet var timeStamp: UILabel!
     @IBOutlet var smileButton: UIButton!
 }
+
+class MainCollectionViewHeader: UICollectionReusableView {
+    @IBOutlet var titleLabel: UILabel!
+}

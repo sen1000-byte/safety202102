@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     var userID: String!
     var me: AppUser!
 //    var myConnections = [Connect]()
-    var friendsActivities = [Activity]()     //0]には自分のuserIDが入っているが、friendsActivitiesには[1]以降が入っている
+    var firiendsDictionary = [Int: Activity]()
     
     var dateFormatter = DateFormatter()
     
@@ -27,13 +27,20 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setUpCollectionView()
-        setUpMeFromFirestore()
+//        setUpMeFromFirestore()
         
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationItem.hidesBackButton = true
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.darkGray]
         
         
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMMHHmm", options: 0, locale: Locale(identifier: "ja_JP"))
+        
+        //smilebuttonの見た目
+        smileButton.layer.shadowColor = UIColor.lightGray.cgColor
+        smileButton.layer.shadowOffset = CGSize(width: 8, height: 8)
+        smileButton.layer.shadowRadius = 3
+        smileButton.layer.shadowOpacity = 1
         
 
 //        //アカウント登録画面を表示させる
@@ -47,7 +54,8 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        collectionView.reloadData()
+        setUpMeFromFirestore()
+//        collectionView.reloadData()
     }
     
     
@@ -56,8 +64,8 @@ class MainViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.backgroundColor = UIColor.lightGray
-        collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 30, left: 20, bottom: 8, right: 20)
+        collectionView.backgroundColor = UIColor.white
+        collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 8, right: 20)
         collectionViewFlowLayout.minimumLineSpacing = 15
         collectionViewFlowLayout.minimumInteritemSpacing = 10
         collectionViewFlowLayout.estimatedItemSize = CGSize(width: collectionView.frame.width / 2 - 30, height: collectionView.frame.width / 2 - 20)
@@ -73,7 +81,7 @@ class MainViewController: UIViewController {
             guard let data = snap?.data() else {return}
             let meTemp = AppUser(data: data)
             self.me = meTemp
-            self.setUpfriendsActivities()
+            self.setUpfriendsDictionaly()
         }
 //        //firebase firestoreから情報の引き出し　connectionsに代入
 //        Firestore.firestore().collection("connection").getDocuments{ (snaps, error) in
@@ -98,20 +106,18 @@ class MainViewController: UIViewController {
 
     }
     
-    func setUpfriendsActivities() {
-        if me.friends.count != 1 {
-            for i in 0..<me.friends.count {
-                Firestore.firestore().collection("activities").document("\(me.friends[i])").getDocument { (snap, error) in
-                    if let error = error {
-                        print("firestoreからactivityのデータ取得に失敗しました\(error)")
-                    }
-                    guard let data = snap?.data() else {return}
-                    let friendActivity = Activity(data: data)
-                    self.friendsActivities.append(friendActivity)
-                    print("わからん",i)
-                    self.collectionView.reloadData()
-                    self.setUpViews()
+    func setUpfriendsDictionaly() {
+        for i in 0..<me.friends.count {
+            Firestore.firestore().collection("activities").document("\(me.friends[i])").getDocument { (snap, error) in
+                if let error = error {
+                    print("firestoreからactivityのデータ取得に失敗しました\(error)")
                 }
+                guard let data = snap?.data() else {return}
+                let friend = Activity(data: data)
+                self.firiendsDictionary[i] = friend
+                //整理できない
+                self.collectionView.reloadData()
+                self.setUpViews()
             }
         }
     }
@@ -135,16 +141,20 @@ class MainViewController: UIViewController {
         }
     }
     
+    
     func setUpViews() {
+        //タイトル
+        navigationItem.title = me.userName
         //更新時間・ボタン
-        if let timeStamp = self.friendsActivities[0].latestActiveTime {
+        let timeStamp = firiendsDictionary[0]?.latestActiveTime ?? Timestamp(seconds: 0, nanoseconds: 0)
+        if  timeStamp != Timestamp(seconds: 0, nanoseconds: 0) {
             let latestetActiveTime: Date = timeStamp.dateValue()
             smileButton.setImage(compareDate(fromDate: latestetActiveTime), for: .normal)
-            self.myLatestActivityTimeLabel.text = self.dateFormatter.string(from: latestetActiveTime)
+            myLatestActivityTimeLabel.text = self.dateFormatter.string(from: latestetActiveTime)
         }else{
-            self.myLatestActivityTimeLabel.text = ""
+            myLatestActivityTimeLabel.text = ""
+            smileButton.setImage(UIImage(named: "smileloading"), for: .normal)
         }
-        
     }
     
     @IBAction func smile() {
@@ -152,7 +162,8 @@ class MainViewController: UIViewController {
         Firestore.firestore().collection("activities").document("\(me.userID)").setData(["latestActiveTime": latestActiveTime], merge: true)
         smileButton.setImage(UIImage(named: "smile"), for: .normal)
         myLatestActivityTimeLabel.text = dateFormatter.string(from: latestActiveTime.dateValue())
-        
+        //情報の更新
+        setUpMeFromFirestore()
     }
     
     @IBAction func toSetting() {
@@ -163,19 +174,9 @@ class MainViewController: UIViewController {
         if segue.identifier == "toSetting" {
             let nVC = segue.destination as! SettingTableViewController
             nVC.userID = sender as? String ?? ""
+            nVC.me = me
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -184,26 +185,34 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("friendsActivities.count",friendsActivities.count)
-        return friendsActivities.count - 1
+        return firiendsDictionary.count - 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! MainCollectionViewCell
-        cell.backgroundColor = UIColor.yellow
-        cell.layer.cornerRadius = 20
-        print("friendsActivities[indexPath.row + 1]", friendsActivities[indexPath.row + 1].userName)
-        cell.friendName.text = friendsActivities[indexPath.row + 1].userName
-        if let friendLatestActiveTimeStamp = friendsActivities[indexPath.row + 1].latestActiveTime {
+        //cellの見た目系
+        cell.backgroundColor = UIColor.lightPinkColor()
+        cell.layer.cornerRadius = 10
+        //cellの表示系
+        cell.friendName.text = firiendsDictionary[indexPath.row + 1]?.userName
+        let friendLatestActiveTimeStamp = firiendsDictionary[indexPath.row + 1]?.latestActiveTime ?? Timestamp(seconds: 0, nanoseconds: 0)
+        if  friendLatestActiveTimeStamp != Timestamp(seconds: 0, nanoseconds: 0)  {
             let friendLatestetActiveTime: Date = friendLatestActiveTimeStamp.dateValue()
             cell.smileButton.setImage(compareDate(fromDate: friendLatestetActiveTime), for: .normal)
             cell.timeStamp.text = dateFormatter.string(from: friendLatestetActiveTime)
         }else{
-            cell.timeStamp.text = ""
+            cell.timeStamp.text = "活動記録がありません"
+            cell.smileButton.setImage(UIImage(named: "smileloading"), for: .normal)
         }
-
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        var header: UICollectionReusableView? = nil
+        if kind == "UICollectionElementKindSectionHeader" {
+            header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? MainCollectionViewHeader
+        }
+        return header!
+    }
     
 }

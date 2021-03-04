@@ -27,6 +27,10 @@
 		33703ABA25EAD32C004619DB /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703AB925EAD32C004619DB /* SearchViewController.swift */; };
 		339E233125EB1E0100D728CC /* Connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339E233025EB1E0100D728CC /* Connect.swift */; };
 		339E233625EC2CB400D728CC /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339E233525EC2CB300D728CC /* Activity.swift */; };
+		33E766DB25EDE0C900398DC7 /* FriendsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E766DA25EDE0C900398DC7 /* FriendsListTableViewCell.swift */; };
+		33E766E325EDE0E700398DC7 /* FriendsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E766E225EDE0E700398DC7 /* FriendsListTableViewController.swift */; };
+		33E766F625EF175300398DC7 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E766F525EF175300398DC7 /* ColorExtension.swift */; };
+		33E766FB25EF670900398DC7 /* Designable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E766FA25EF670900398DC7 /* Designable.swift */; };
 		867D0C0E81018FE763B70611 /* Pods_safety202102Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C826DD05F919C81AC4F4EFA /* Pods_safety202102Tests.framework */; };
 		A7834C170230B5F478B17590 /* Pods_safety202102_safety202102UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FBEEDFF01DCD92ECE11B2BC /* Pods_safety202102_safety202102UITests.framework */; };
 		CCBA2FB82E22D67C1CFD04E4 /* Pods_safety202102.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC20786D1F158CDD74DC8BF /* Pods_safety202102.framework */; };
@@ -77,6 +81,10 @@
 		33703AB925EAD32C004619DB /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		339E233025EB1E0100D728CC /* Connect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connect.swift; sourceTree = "<group>"; };
 		339E233525EC2CB300D728CC /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		33E766DA25EDE0C900398DC7 /* FriendsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListTableViewCell.swift; sourceTree = "<group>"; };
+		33E766E225EDE0E700398DC7 /* FriendsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListTableViewController.swift; sourceTree = "<group>"; };
+		33E766F525EF175300398DC7 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		33E766FA25EF670900398DC7 /* Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designable.swift; sourceTree = "<group>"; };
 		4C826DD05F919C81AC4F4EFA /* Pods_safety202102Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_safety202102Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5912135AF1552D2F1AA265DA /* Pods-safety202102-safety202102UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safety202102-safety202102UITests.debug.xcconfig"; path = "Target Support Files/Pods-safety202102-safety202102UITests/Pods-safety202102-safety202102UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5E7B2DD5B5563297A43A56E5 /* Pods-safety202102.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safety202102.debug.xcconfig"; path = "Target Support Files/Pods-safety202102/Pods-safety202102.debug.xcconfig"; sourceTree = "<group>"; };
@@ -156,6 +164,8 @@
 				33703A9725E9D3B7004619DB /* SettingTableViewController.swift */,
 				33703AA125EA1D8F004619DB /* Settings */,
 				33703AA525EA1EE2004619DB /* Models */,
+				33E766F525EF175300398DC7 /* ColorExtension.swift */,
+				33E766FA25EF670900398DC7 /* Designable.swift */,
 			);
 			path = safety202102;
 			sourceTree = "<group>";
@@ -183,6 +193,8 @@
 			children = (
 				33703A9C25EA15A2004619DB /* SettingUserNameTableViewController.swift */,
 				33703AB925EAD32C004619DB /* SearchViewController.swift */,
+				33E766E225EDE0E700398DC7 /* FriendsListTableViewController.swift */,
+				33E766DA25EDE0C900398DC7 /* FriendsListTableViewCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -462,15 +474,19 @@
 				33703A9D25EA15A2004619DB /* SettingUserNameTableViewController.swift in Sources */,
 				33703A9825E9D3B7004619DB /* SettingTableViewController.swift in Sources */,
 				339E233625EC2CB400D728CC /* Activity.swift in Sources */,
+				33E766DB25EDE0C900398DC7 /* FriendsListTableViewCell.swift in Sources */,
 				33703A1C25E7E48C004619DB /* ViewController.swift in Sources */,
 				339E233125EB1E0100D728CC /* Connect.swift in Sources */,
+				33E766F625EF175300398DC7 /* ColorExtension.swift in Sources */,
 				33703A1825E7E48C004619DB /* AppDelegate.swift in Sources */,
 				33703A8325E960AA004619DB /* SignInViewController.swift in Sources */,
 				33703A4B25E8C028004619DB /* SignUpViewController.swift in Sources */,
 				33703ABA25EAD32C004619DB /* SearchViewController.swift in Sources */,
+				33E766FB25EF670900398DC7 /* Designable.swift in Sources */,
 				33703AA725EA1F03004619DB /* AppUser.swift in Sources */,
 				33703AB225EA5077004619DB /* MainCollectionViewCell.swift in Sources */,
 				33703A1A25E7E48C004619DB /* SceneDelegate.swift in Sources */,
+				33E766E325EDE0E700398DC7 /* FriendsListTableViewController.swift in Sources */,
 				33703A8825E9CE2D004619DB /* AlternateViewController.swift in Sources */,
 				33703A5025E8C44A004619DB /* MainViewController.swift in Sources */,
 			);

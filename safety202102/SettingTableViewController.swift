@@ -16,11 +16,20 @@ class SettingTableViewController: UITableViewController {
     @IBOutlet var easyModeSwitch: UISwitch!
     
     var userID: String!
+    var me: AppUser!
+    
+    var userDefaults = UserDefaults.standard
+    var easyModeBool: Bool!
+    var switchPushed: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.backgroundColor = UIColor(red: 208 / 255, green: 230 / 255, blue: 153 / 255, alpha: 1)
+        //見た目
+        self.tableView.backgroundColor = UIColor.backGroundGreenColor()
+        
+        easyModeBool = userDefaults.bool(forKey: "easyMode")
+        
         easyModeSwitch.isOn = false
 
         // Uncomment the following line to preserve selection between presentations
@@ -29,11 +38,22 @@ class SettingTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if switchPushed % 2 != 0 {
+            if easyModeBool {
+                
+            }
+        }
+    }
 
     // MARK: - Table view data source
 
     
     @IBAction func easyMode(sender: UISwitch) {
+        switchPushed += 1
+        print(switchPushed)
         if sender.isOn {
             
         }else{
@@ -62,20 +82,60 @@ class SettingTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //logoutをsection0のrow3に実装
-        if indexPath.section == 0 && indexPath.row == 3 {
-            let alert = UIAlertController(title: "ログアウトしますか？", message: "はいを押すとログアウトします", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { action in
-                try? Auth.auth().signOut()
-                self.navigationController?.popToRootViewController(animated: true)
-            }))
-            alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
-            present(alert, animated: true, completion: nil)
+        switch indexPath.section {
+        case 0 :
+            switch indexPath.row {
+            case 0:
+                return
+            case 1:
+                return
+            case 2:
+                return
+            case 3:
+                //logoutをsection0のrow3に実装
+                logout()
+                return
+            default:
+                return
+            }
+        case 1:
+            switch  indexPath.row {
+            case 0:
+                performSegue(withIdentifier: "toFriendsList", sender: nil)
+                return
+            case 1:
+                performSegue(withIdentifier: "toSearch", sender: userID)
+                return
+            default:
+                return
+            }
+        default:
+            return
         }
-        
-        if indexPath.section == 1 && indexPath.row == 1 {
-            performSegue(withIdentifier: "toSearch", sender: userID)
-        }
+
+//        if indexPath.section == 0 && indexPath.row == 3 {
+//            let alert = UIAlertController(title: "ログアウトしますか？", message: "はいを押すとログアウトします", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { action in
+//                try? Auth.auth().signOut()
+//                self.navigationController?.popToRootViewController(animated: true)
+//            }))
+//            alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+//            present(alert, animated: true, completion: nil)
+//        }
+//
+//        if indexPath.section == 1 && indexPath.row == 1 {
+//            performSegue(withIdentifier: "toSearch", sender: userID)
+//        }
+    }
+    
+    func logout() {
+        let alert = UIAlertController(title: "ログアウトしますか？", message: "はいを押すとログアウトします", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { action in
+            try? Auth.auth().signOut()
+            self.navigationController?.popToRootViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
