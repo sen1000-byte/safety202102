@@ -17,6 +17,7 @@ class SettingTableViewController: UITableViewController {
     
     var userID: String!
     var me: AppUser!
+    var friendsDictionary = [Int: Activity]()
     
     var userDefaults = UserDefaults.standard
     var easyModeBool: Bool!
@@ -29,8 +30,7 @@ class SettingTableViewController: UITableViewController {
         self.tableView.backgroundColor = UIColor.backGroundGreenColor()
         
         easyModeBool = userDefaults.bool(forKey: "easyMode")
-        
-        easyModeSwitch.isOn = false
+        easyModeSwitch.isOn = easyModeBool
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -40,11 +40,18 @@ class SettingTableViewController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
+        
+        
+        print("setting",friendsDictionary)
+        
+        //もしボタンが変更せれていたなら
         if switchPushed % 2 != 0 {
-            if easyModeBool {
-                
-            }
+            print("発動")
+            easyModeBool = easyModeSwitch.isOn
+            userDefaults.setValue(easyModeBool, forKey: "easyMode")
+            let index = navigationController!.viewControllers.count - 1
+            navigationController?.popToViewController(navigationController!.viewControllers[index], animated: false)
         }
     }
 
@@ -142,7 +149,12 @@ class SettingTableViewController: UITableViewController {
         if segue.identifier == "toSearch" {
             let nVC = segue.destination as! SearchViewController
             nVC.userID = sender as! String
-            print(nVC.userID)
+        }
+        
+        if segue.identifier == "toFriendsList" {
+            let nVC = segue.destination as! FriendsListTableViewController
+            nVC.me = me
+            nVC.friendsDictionary = friendsDictionary
         }
     }
 

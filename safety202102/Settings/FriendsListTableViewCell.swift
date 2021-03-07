@@ -10,6 +10,7 @@ import UIKit
 class FriendsListTableViewCell: UITableViewCell {
 
     @IBOutlet var friendNameLabel: UILabel!
+    @IBOutlet var smileImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

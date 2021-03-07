@@ -56,27 +56,41 @@ class SignUpViewController: UIViewController {
     
     func toMain(userID: String) {
         
-        if easyModeBool {
-            //２つ先へ一気に遷移
-            let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
-            let vc3 = self.storyboard?.instantiateViewController(withIdentifier: "AlternateViewController") as! AlternateViewController
-            // 遷移後のViewControllerの配列を作成
-            let ar = [self, vc2, vc3]
-            //データの受け渡し
-            vc3.userID = userID
-            // まとめて設定
-            self.navigationController?.setViewControllers(ar, animated: false)
-        }else{
-            //２つ先へ一気に遷移
-            let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
-            let vc3 = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-            // 遷移後のViewControllerの配列を作成
-            let ar = [self, vc2, vc3]
-            //データの受け渡し
-            vc3.userID = userID
-            // まとめて設定
-            self.navigationController?.setViewControllers(ar, animated: false)
-        }
+//        if easyModeBool {
+//            //２つ先へ一気に遷移
+//            let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+//            let vc3 = self.storyboard?.instantiateViewController(withIdentifier: "AlternateViewController") as! AlternateViewController
+//            // 遷移後のViewControllerの配列を作成
+//            let ar = [self, vc2, vc3]
+//            //データの受け渡し
+//            vc3.userID = userID
+//            // まとめて設定
+//            self.navigationController?.setViewControllers(ar, animated: false)
+//        }else{
+//            //２つ先へ一気に遷移
+//            let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+//            let vc3 = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+//            // 遷移後のViewControllerの配列を作成
+//            let ar = [self, vc2, vc3]
+//            //データの受け渡し
+//            vc3.userID = userID
+//            // まとめて設定
+//            self.navigationController?.setViewControllers(ar, animated: false)
+//        }
+        // ２つ先へ一気に遷移
+        let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+        let vc3 = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
+        // 遷移後のViewControllerの配列を作成
+        let ar = [self, vc2, vc3]
+        //データの受け渡し
+        vc3.userID = userID
+        // まとめて設定
+        self.navigationController?.setViewControllers(ar, animated: false)
+//        let nVC = storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
+//        nVC.userID = userID
+//        
+//        
+//        self.navigationController?.pushViewController(nVC, animated: false)
     }
     
 

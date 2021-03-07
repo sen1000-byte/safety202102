@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 import FirebaseFirestore
 
 class MainViewController: UIViewController {
@@ -14,9 +15,11 @@ class MainViewController: UIViewController {
     var userID: String!
     var me: AppUser!
 //    var myConnections = [Connect]()
-    var firiendsDictionary = [Int: Activity]()
+    var friendsDictionary = [Int: Activity]()
     
     var dateFormatter = DateFormatter()
+    
+    var settingButtonItem: UIBarButtonItem!
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var collectionViewFlowLayout: UICollectionViewFlowLayout!
@@ -26,13 +29,19 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        userID = Auth.auth().currentUser!.uid
+        
         setUpCollectionView()
 //        setUpMeFromFirestore()
-        
+
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationItem.hidesBackButton = true
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.darkGray]
-        
+//        navigationController?.navigationItem.setRightBarButton(settingButtonItem, animated: false)
+
+        settingButtonItem = UIBarButtonItem(title: "設定", style: .done, target: self, action: #selector(settingBarButtonTapped))
+        self.parent?.navigationItem.rightBarButtonItem = settingButtonItem
+
         
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMMHHmm", options: 0, locale: Locale(identifier: "ja_JP"))
         
@@ -54,10 +63,11 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        navigationController?.setToolbarHidden(true, animated: false)
         setUpMeFromFirestore()
 //        collectionView.reloadData()
+        
     }
-    
     
     func setUpCollectionView() {
         //collectionview
@@ -107,6 +117,8 @@ class MainViewController: UIViewController {
     }
     
     func setUpfriendsDictionaly() {
+        //friendsDictionaryを初期化
+        friendsDictionary = [:]
         for i in 0..<me.friends.count {
             Firestore.firestore().collection("activities").document("\(me.friends[i])").getDocument { (snap, error) in
                 if let error = error {
@@ -114,7 +126,7 @@ class MainViewController: UIViewController {
                 }
                 guard let data = snap?.data() else {return}
                 let friend = Activity(data: data)
-                self.firiendsDictionary[i] = friend
+                self.friendsDictionary[i] = friend
                 //整理できない
                 self.collectionView.reloadData()
                 self.setUpViews()
@@ -141,12 +153,11 @@ class MainViewController: UIViewController {
         }
     }
     
-    
     func setUpViews() {
         //タイトル
-        navigationItem.title = me.userName
+        self.parent?.navigationItem.title = me.userName
         //更新時間・ボタン
-        let timeStamp = firiendsDictionary[0]?.latestActiveTime ?? Timestamp(seconds: 0, nanoseconds: 0)
+        let timeStamp = friendsDictionary[0]?.latestActiveTime ?? Timestamp(seconds: 0, nanoseconds: 0)
         if  timeStamp != Timestamp(seconds: 0, nanoseconds: 0) {
             let latestetActiveTime: Date = timeStamp.dateValue()
             smileButton.setImage(compareDate(fromDate: latestetActiveTime), for: .normal)
@@ -166,6 +177,10 @@ class MainViewController: UIViewController {
         setUpMeFromFirestore()
     }
     
+    @objc func settingBarButtonTapped() {
+        performSegue(withIdentifier: "toSetting", sender: userID)
+    }
+    
     @IBAction func toSetting() {
         performSegue(withIdentifier: "toSetting", sender: userID)
     }
@@ -175,8 +190,10 @@ class MainViewController: UIViewController {
             let nVC = segue.destination as! SettingTableViewController
             nVC.userID = sender as? String ?? ""
             nVC.me = me
+            nVC.friendsDictionary = friendsDictionary
         }
     }
+    
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -185,7 +202,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return firiendsDictionary.count - 1
+        return friendsDictionary.count - 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -194,8 +211,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.backgroundColor = UIColor.lightPinkColor()
         cell.layer.cornerRadius = 10
         //cellの表示系
-        cell.friendName.text = firiendsDictionary[indexPath.row + 1]?.userName
-        let friendLatestActiveTimeStamp = firiendsDictionary[indexPath.row + 1]?.latestActiveTime ?? Timestamp(seconds: 0, nanoseconds: 0)
+        cell.friendName.text = friendsDictionary[indexPath.row + 1]?.userName
+        let friendLatestActiveTimeStamp = friendsDictionary[indexPath.row + 1]?.latestActiveTime ?? Timestamp(seconds: 0, nanoseconds: 0)
         if  friendLatestActiveTimeStamp != Timestamp(seconds: 0, nanoseconds: 0)  {
             let friendLatestetActiveTime: Date = friendLatestActiveTimeStamp.dateValue()
             cell.smileButton.setImage(compareDate(fromDate: friendLatestetActiveTime), for: .normal)

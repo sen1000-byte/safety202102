@@ -11,17 +11,26 @@ class SettingUserNameTableViewController: UITableViewController {
     
     @IBOutlet var nowUserNameLabel: UILabel!
     @IBOutlet var newUserNameTextField: UITextField!
+    
+    var doneBarButtonItem: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         newUserNameTextField.delegate = self
         
+        doneBarButtonItem = UIBarButtonItem(title: "設定", style: .done, target: self, action: #selector(doneBarButtonItemTapped))
+        self.parent?.navigationItem.rightBarButtonItem = doneBarButtonItem
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    @objc func doneBarButtonItemTapped() {
+        
     }
 
     // MARK: - Table view data source
