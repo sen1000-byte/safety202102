@@ -40,6 +40,7 @@ class MainViewController: UIViewController {
 //        navigationController?.navigationItem.setRightBarButton(settingButtonItem, animated: false)
 
         settingButtonItem = UIBarButtonItem(title: "設定", style: .done, target: self, action: #selector(settingBarButtonTapped))
+        settingButtonItem.tintColor = UIColor.darkGray
         self.parent?.navigationItem.rightBarButtonItem = settingButtonItem
 
         
@@ -127,7 +128,7 @@ class MainViewController: UIViewController {
                 guard let data = snap?.data() else {return}
                 let friend = Activity(data: data)
                 self.friendsDictionary[i] = friend
-                //整理できない
+                
                 self.collectionView.reloadData()
                 self.setUpViews()
             }

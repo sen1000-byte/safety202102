@@ -9,8 +9,8 @@ import Foundation
 import FirebaseFirestore
 
 class AppUser {
-    let userName: String
-    let email: String
+    var userName: String
+    var email: String
     let updatedAt: Timestamp
     
     var userID: String

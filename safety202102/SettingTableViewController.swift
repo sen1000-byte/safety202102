@@ -39,11 +39,14 @@ class SettingTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        userNameLabel.text = me.userName
+        emailLabel.text = me.email
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        
-        print("setting",friendsDictionary)
         
         //もしボタンが変更せれていたなら
         if switchPushed % 2 != 0 {
@@ -82,7 +85,7 @@ class SettingTableViewController: UITableViewController {
         case 1:
             return 2
         case 2:
-            return 1
+            return 2
         default:
             return 0
         }
@@ -146,6 +149,16 @@ class SettingTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toSettingUserName" {
+            let nVC = segue.destination as! SettingUserNameTableViewController
+            nVC.me = me
+        }
+        
+        if segue.identifier == "toSettingEmail" {
+            let nVC = segue.destination as! SettingEmailTableViewController
+            nVC.me = me
+        }
+        
         if segue.identifier == "toSearch" {
             let nVC = segue.destination as! SearchViewController
             nVC.userID = sender as! String

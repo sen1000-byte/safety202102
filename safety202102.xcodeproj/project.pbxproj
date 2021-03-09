@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		3312668925F0CA8500E7B450 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3312668825F0CA8500E7B450 /* TabBarViewController.swift */; };
 		3312669425F3A38C00E7B450 /* AlternateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3312669325F3A38C00E7B450 /* AlternateViewController.swift */; };
+		3312669F25F48B3F00E7B450 /* SettingEmailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3312669E25F48B3F00E7B450 /* SettingEmailTableViewController.swift */; };
+		331266A425F610F500E7B450 /* ReusableParts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331266A325F610F200E7B450 /* ReusableParts.swift */; };
+		331266A925F61A8600E7B450 /* VerifyPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331266A825F61A8500E7B450 /* VerifyPasswordViewController.swift */; };
+		331266AE25F7080500E7B450 /* SettingPasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331266AD25F7080400E7B450 /* SettingPasswordTableViewController.swift */; };
 		33703A1825E7E48C004619DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A1725E7E48B004619DB /* AppDelegate.swift */; };
 		33703A1A25E7E48C004619DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A1925E7E48C004619DB /* SceneDelegate.swift */; };
 		33703A1C25E7E48C004619DB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A1B25E7E48C004619DB /* ViewController.swift */; };
@@ -58,6 +62,10 @@
 		1F89DCCAC40A713ADFC29602 /* Pods-safety202102.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safety202102.release.xcconfig"; path = "Target Support Files/Pods-safety202102/Pods-safety202102.release.xcconfig"; sourceTree = "<group>"; };
 		3312668825F0CA8500E7B450 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		3312669325F3A38C00E7B450 /* AlternateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternateViewController.swift; sourceTree = "<group>"; };
+		3312669E25F48B3F00E7B450 /* SettingEmailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingEmailTableViewController.swift; sourceTree = "<group>"; };
+		331266A325F610F200E7B450 /* ReusableParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableParts.swift; sourceTree = "<group>"; };
+		331266A825F61A8500E7B450 /* VerifyPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasswordViewController.swift; sourceTree = "<group>"; };
+		331266AD25F7080400E7B450 /* SettingPasswordTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPasswordTableViewController.swift; sourceTree = "<group>"; };
 		33703A1425E7E48B004619DB /* safety202102.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = safety202102.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33703A1725E7E48B004619DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33703A1925E7E48C004619DB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -169,6 +177,7 @@
 				33703AA525EA1EE2004619DB /* Models */,
 				33E766F525EF175300398DC7 /* ColorExtension.swift */,
 				33E766FA25EF670900398DC7 /* Designable.swift */,
+				331266A325F610F200E7B450 /* ReusableParts.swift */,
 			);
 			path = safety202102;
 			sourceTree = "<group>";
@@ -195,9 +204,12 @@
 			isa = PBXGroup;
 			children = (
 				33703A9C25EA15A2004619DB /* SettingUserNameTableViewController.swift */,
+				3312669E25F48B3F00E7B450 /* SettingEmailTableViewController.swift */,
+				331266AD25F7080400E7B450 /* SettingPasswordTableViewController.swift */,
 				33703AB925EAD32C004619DB /* SearchViewController.swift */,
 				33E766E225EDE0E700398DC7 /* FriendsListTableViewController.swift */,
 				33E766DA25EDE0C900398DC7 /* FriendsListTableViewCell.swift */,
+				331266A825F61A8500E7B450 /* VerifyPasswordViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -475,6 +487,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				33703A9D25EA15A2004619DB /* SettingUserNameTableViewController.swift in Sources */,
+				331266A425F610F500E7B450 /* ReusableParts.swift in Sources */,
+				331266A925F61A8600E7B450 /* VerifyPasswordViewController.swift in Sources */,
 				33703A9825E9D3B7004619DB /* SettingTableViewController.swift in Sources */,
 				339E233625EC2CB400D728CC /* Activity.swift in Sources */,
 				33E766DB25EDE0C900398DC7 /* FriendsListTableViewCell.swift in Sources */,
@@ -487,8 +501,10 @@
 				33703ABA25EAD32C004619DB /* SearchViewController.swift in Sources */,
 				33E766FB25EF670900398DC7 /* Designable.swift in Sources */,
 				33703AA725EA1F03004619DB /* AppUser.swift in Sources */,
+				3312669F25F48B3F00E7B450 /* SettingEmailTableViewController.swift in Sources */,
 				3312668925F0CA8500E7B450 /* TabBarViewController.swift in Sources */,
 				33703AB225EA5077004619DB /* MainCollectionViewCell.swift in Sources */,
+				331266AE25F7080500E7B450 /* SettingPasswordTableViewController.swift in Sources */,
 				33703A1A25E7E48C004619DB /* SceneDelegate.swift in Sources */,
 				33E766E325EDE0E700398DC7 /* FriendsListTableViewController.swift in Sources */,
 				33703A5025E8C44A004619DB /* MainViewController.swift in Sources */,
@@ -670,6 +686,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9J75UHWJ2Q;
 				INFOPLIST_FILE = safety202102/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -689,6 +706,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9J75UHWJ2Q;
 				INFOPLIST_FILE = safety202102/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -22,6 +22,7 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //見た目
         registerButton.layer.cornerRadius = 20
         registerButton.layer.shadowColor = UIColor.lightGray.cgColor

@@ -33,13 +33,12 @@ class FriendsListTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         let nav = self.navigationController!
-        
-        print("friends",friendsDictionary)
-        
         //呼び出し元のView Controllerを遷移履歴から取得しパラメータを渡す
         let bVC = nav.viewControllers[nav.viewControllers.count-1] as! SettingTableViewController
         bVC.friendsDictionary = friendsDictionary
     }
+    
+    
     @IBAction func edit() {
         if tableView.isEditing {
             tableView.setEditing(false, animated: true)
