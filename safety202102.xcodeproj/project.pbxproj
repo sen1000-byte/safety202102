@@ -13,6 +13,7 @@
 		331266A425F610F500E7B450 /* ReusableParts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331266A325F610F200E7B450 /* ReusableParts.swift */; };
 		331266A925F61A8600E7B450 /* VerifyPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331266A825F61A8500E7B450 /* VerifyPasswordViewController.swift */; };
 		331266AE25F7080500E7B450 /* SettingPasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331266AD25F7080400E7B450 /* SettingPasswordTableViewController.swift */; };
+		331266B625F752FB00E7B450 /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331266B525F752FA00E7B450 /* SearchFriendViewController.swift */; };
 		33703A1825E7E48C004619DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A1725E7E48B004619DB /* AppDelegate.swift */; };
 		33703A1A25E7E48C004619DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A1925E7E48C004619DB /* SceneDelegate.swift */; };
 		33703A1C25E7E48C004619DB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33703A1B25E7E48C004619DB /* ViewController.swift */; };
@@ -66,6 +67,7 @@
 		331266A325F610F200E7B450 /* ReusableParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableParts.swift; sourceTree = "<group>"; };
 		331266A825F61A8500E7B450 /* VerifyPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasswordViewController.swift; sourceTree = "<group>"; };
 		331266AD25F7080400E7B450 /* SettingPasswordTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPasswordTableViewController.swift; sourceTree = "<group>"; };
+		331266B525F752FA00E7B450 /* SearchFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendViewController.swift; sourceTree = "<group>"; };
 		33703A1425E7E48B004619DB /* safety202102.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = safety202102.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33703A1725E7E48B004619DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33703A1925E7E48C004619DB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				3312669E25F48B3F00E7B450 /* SettingEmailTableViewController.swift */,
 				331266AD25F7080400E7B450 /* SettingPasswordTableViewController.swift */,
 				33703AB925EAD32C004619DB /* SearchViewController.swift */,
+				331266B525F752FA00E7B450 /* SearchFriendViewController.swift */,
 				33E766E225EDE0E700398DC7 /* FriendsListTableViewController.swift */,
 				33E766DA25EDE0C900398DC7 /* FriendsListTableViewCell.swift */,
 				331266A825F61A8500E7B450 /* VerifyPasswordViewController.swift */,
@@ -502,6 +505,7 @@
 				33E766FB25EF670900398DC7 /* Designable.swift in Sources */,
 				33703AA725EA1F03004619DB /* AppUser.swift in Sources */,
 				3312669F25F48B3F00E7B450 /* SettingEmailTableViewController.swift in Sources */,
+				331266B625F752FB00E7B450 /* SearchFriendViewController.swift in Sources */,
 				3312668925F0CA8500E7B450 /* TabBarViewController.swift in Sources */,
 				33703AB225EA5077004619DB /* MainCollectionViewCell.swift in Sources */,
 				331266AE25F7080500E7B450 /* SettingPasswordTableViewController.swift in Sources */,

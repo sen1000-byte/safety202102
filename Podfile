@@ -9,6 +9,7 @@ target 'safety202102' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'EAIntroView'
 
   target 'safety202102Tests' do
     inherit! :search_paths

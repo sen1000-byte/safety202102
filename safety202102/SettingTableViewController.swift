@@ -15,6 +15,7 @@ class SettingTableViewController: UITableViewController {
     @IBOutlet var emailLabel: UILabel!
     @IBOutlet var easyModeSwitch: UISwitch!
     
+    //受け取り用
     var userID: String!
     var me: AppUser!
     var friendsDictionary = [Int: Activity]()
@@ -43,6 +44,8 @@ class SettingTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         userNameLabel.text = me.userName
         emailLabel.text = me.email
+        
+        print("setting, friendsDic: ", friendsDictionary)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -114,7 +117,7 @@ class SettingTableViewController: UITableViewController {
                 performSegue(withIdentifier: "toFriendsList", sender: nil)
                 return
             case 1:
-                performSegue(withIdentifier: "toSearch", sender: userID)
+                performSegue(withIdentifier: "toSearchFriend", sender: nil)
                 return
             default:
                 return
@@ -159,9 +162,11 @@ class SettingTableViewController: UITableViewController {
             nVC.me = me
         }
         
-        if segue.identifier == "toSearch" {
-            let nVC = segue.destination as! SearchViewController
-            nVC.userID = sender as! String
+        if segue.identifier == "toSearchFriend" {
+            let nVC = segue.destination as! SearchFriendViewController
+            nVC.me = me
+            nVC.friendsDictionary = friendsDictionary
+            nVC.flagForPreVCInt = 1
         }
         
         if segue.identifier == "toFriendsList" {

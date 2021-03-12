@@ -11,8 +11,10 @@ import FirebaseFirestore
 
 class SearchViewController: UIViewController {
     
+    //受け取り用
     var me: AppUser!
     var userID: String!
+    var friendsDictionary = [Int: Activity]()
     
     @IBOutlet var searchNameTextField: UITextField!
     @IBOutlet var searchEmailTextField: UITextField!
@@ -27,7 +29,6 @@ class SearchViewController: UIViewController {
         loadFromFirestore()
         uiSettings()
 
-        // Do any additional setup after loading the view.
     }
     
     func loadFromFirestore() {

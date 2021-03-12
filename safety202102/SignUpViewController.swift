@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
+import EAIntroView
 
 class SignUpViewController: UIViewController {
 
@@ -19,6 +20,7 @@ class SignUpViewController: UIViewController {
     
     var userDefaults = UserDefaults.standard
     var easyModeBool: Bool!
+    var isFirstStartBool: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,21 +42,40 @@ class SignUpViewController: UIViewController {
         registerButton.isEnabled = false
         registerButton.backgroundColor = UIColor.lightGray
         
+        //簡単モードか否か
         easyModeBool = userDefaults.bool(forKey: "easyMode")
-
-        // Do any additional setup after loading the view.
-        if let user = Auth.auth().currentUser {
-            let userID = user.uid
-            toMain(userID: userID)
+        
+        //初回起動か否か
+        isFirstStartBool = userDefaults.bool(forKey: "isFirstStart")//trueの場合は初回でない、falseの時は初回
+        //初回の場合、walkthroughを表示する
+        print("isFirstStartBool", isFirstStartBool)
+        if isFirstStartBool == false {
+            showWalkthrough()
+            userDefaults.setValue(true, forKey: "isFirstStart")
+        } else {
+            print("viewdidloadだよ")
+            //初回起動時でない&ログインしている状態
+            if let user = Auth.auth().currentUser {
+                let userID = user.uid
+                toMain(userID: userID)
+            }
         }
     }
     
-    //ログインしていた場合に画面を飛ばす
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+//        //チュートリアルが終わってから起こる想定
+//        if isFirstStartBool == true {
+//            //ログインしている状態
+//            if let user = Auth.auth().currentUser {
+//                let userID = user.uid
+//                toMain(userID: userID)
+//            }
+//        }
 
     }
     
+    //ログインしていた場合に画面を飛ばす
     func toMain(userID: String) {
         
 //        if easyModeBool {
@@ -160,6 +181,7 @@ class SignUpViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
 
 //TextFieldについてのextension
 extension SignUpViewController: UITextFieldDelegate{
@@ -183,3 +205,78 @@ extension SignUpViewController: UITextFieldDelegate{
         return true
     }
 }
+
+//walkthroughを表示させるためのextension
+extension SignUpViewController: EAIntroDelegate {
+    
+    //walkthroughを表示させるfunc
+    func showWalkthrough() {
+        
+        let page1 = EAIntroPage()
+        page1.title = "インストールありがとうございます！！"
+        page1.titleColor = UIColor.darkGray
+        page1.titleFont = UIFont(name: "Helvetica-Bold", size: 20)
+        page1.desc = "天気を確認しつつ、家族や友人の安全を把握できるアプリです。"
+        page1.descColor = UIColor.darkGray
+        page1.descFont = UIFont(name: "HiraMaruProN-W4", size: 14)
+        page1.bgColor = UIColor.init(red: 242 / 255, green: 255 / 255, blue: 220 / 255, alpha: 1)
+        page1.bgImage = UIImage(named: "walkthrough1")
+         
+        let page2 = EAIntroPage()
+        page2.title = "仲間を登録して安否をチェック！"
+        page2.titleColor = UIColor.darkGray
+        page2.titleFont = UIFont(name: "Helvetica-Bold", size: 20)
+        page2.desc = "ボタンを押すことで、登録しておいた相手の画面に自分の安否が反映されます。"
+        page2.descColor = UIColor.darkGray
+        page2.descFont = UIFont(name: "HiraMaruProN-W4", size: 14)
+        page2.bgColor = UIColor.init(red: 207 / 255, green: 249 / 255, blue: 244 / 255, alpha: 1)
+        page2.bgImage = UIImage(named: "walkthrough2")
+         
+        let page3 = EAIntroPage()
+        page3.title = "一目で安否確認！"
+        page3.titleColor = UIColor.darkGray
+        page3.titleFont = UIFont(name: "Helvetica-Bold", size: 20)
+        page3.desc = "更新時刻に合わせて、画像が変化します"
+        page3.descColor = UIColor.darkGray
+        page3.descFont = UIFont(name: "HiraMaruProN-W4", size: 14)
+        page3.bgColor = UIColor.init(red: 255 / 255, green: 222 / 255, blue: 231 / 255, alpha: 1)
+        page3.bgImage = UIImage(named: "walkthrough3")
+        
+        let page4 = EAIntroPage()
+        page4.title = "選べる２つのモード"
+        page4.titleColor = UIColor.darkGray
+        page4.titleFont = UIFont(name: "Helvetica-Bold", size: 20)
+        page4.desc = "通常モードでは、自分と登録した仲間の活動状況が確認できます。簡単モードでは自分の活動状況のみが表示されます。"
+        page4.descColor = UIColor.darkGray
+        page4.descFont = UIFont(name: "HiraMaruProN-W4", size: 14)
+        page4.bgColor = UIColor.init(red: 252 / 255, green: 255 / 255, blue: 199 / 255, alpha: 1)
+        page4.bgImage = UIImage(named: "walkthrough4")
+        
+        let page5 = EAIntroPage()
+        page5.title = "通知機能でリマインド"
+        page5.titleColor = UIColor.darkGray
+        page5.titleFont = UIFont(name: "Helvetica-Bold", size: 20)
+        page5.desc = "毎朝６時に自分の安否を更新するよう、通知します。"
+        page5.descColor = UIColor.darkGray
+        page5.descFont = UIFont(name: "HiraMaruProN-W4", size: 14)
+        page5.bgColor = UIColor.init(red: 255 / 255, green: 253 / 255, blue: 235 / 255, alpha: 1)
+        page5.bgImage = UIImage(named: "walkthrough5")
+         
+        //ここでページを追加
+        let introView = EAIntroView(frame: self.view.bounds, andPages: [page1, page2, page3, page4, page5])
+        //スキップボタン
+        introView?.skipButton.tintColor = UIColor.darkGray
+        introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal)
+        
+        //ページコントロール
+        introView?.pageControl.tintColor = UIColor.darkGray
+         
+        introView?.delegate = self
+        introView?.show(in: self.view, animateDuration: 1.0)
+        
+    }
+}
+
+
+
+

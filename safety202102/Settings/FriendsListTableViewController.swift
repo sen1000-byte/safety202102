@@ -36,6 +36,7 @@ class FriendsListTableViewController: UITableViewController {
         //呼び出し元のView Controllerを遷移履歴から取得しパラメータを渡す
         let bVC = nav.viewControllers[nav.viewControllers.count-1] as! SettingTableViewController
         bVC.friendsDictionary = friendsDictionary
+        bVC.me.friends = me.friends
     }
     
     
@@ -145,6 +146,8 @@ class FriendsListTableViewController: UITableViewController {
                 myfriendsArray.remove(at: indexPath.row + 1)
                 //firestoreに上書き保存
                 Firestore.firestore().collection("users").document(self.me.userID).setData(["friends": myfriendsArray], merge: true)
+                //meを更新
+                self.me.friends = myfriendsArray
                 
                 //firestoreから削除する相手のデータを取得
                 Firestore.firestore().collection("users").document(myfriendID).getDocument { (snap, error) in

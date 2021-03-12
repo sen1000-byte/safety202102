@@ -26,8 +26,8 @@ extension CustomButton {
     internal func commonInit(){
         self.layer.cornerRadius = 20
         self.layer.shadowOffset = CGSize(width: 1, height: 1 )
-        self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowRadius = 5
+        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowRadius = 4
         self.layer.shadowOpacity = 1.0
 
     }

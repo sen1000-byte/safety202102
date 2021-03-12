@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import EAIntroView
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+//        //初回起動かどうかを判断するためのuserdefaults
+//        let launchedBeforeBool = UserDefaults.standard.bool(forKey: "launchedBefore")
+//        //初回起動かどうかを判断
+//        if launchedBeforeBool == true {
+//            print("以前に開いたことがあります")
+//        }else{
+//            showWalkthrough()
+//            //userDefaultsを更新する
+//            UserDefaults.standard.setValue(true, forKey: "launchedBefore")
+//        }
+        
         
         FirebaseApp.configure()
         return true
@@ -37,4 +50,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
