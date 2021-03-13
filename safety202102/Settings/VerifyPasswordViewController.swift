@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import PKHUD
 
 class VerifyPasswordViewController: UIViewController {
     
@@ -51,6 +52,8 @@ class VerifyPasswordViewController: UIViewController {
                 //認証のエラー
                 if let error = error {
                     //!!!!!!podでエラー文章!!!!!!!!!!!!!!
+                    HUD.dimsBackground = true
+                    HUD.flash(.labeledError(title: "エラー", subtitle: "ユーザー認証に失敗しました。パスワードを確認してください"), delay: 1.5)
                     print("ユーザ認証に失敗しました。\(error)")
                     return
                 }

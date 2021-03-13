@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import PKHUD
 
 class SignInViewController: UIViewController {
     
@@ -46,6 +47,8 @@ class SignInViewController: UIViewController {
           guard let strongSelf = self else { return }
             if let error = error {
                 print("ログインに失敗\(error)")
+                HUD.dimsBackground = true
+                HUD.flash(.labeledError(title: "認証エラー", subtitle: "メールアドレス・パスワード(６文字以上)を確認してください"), delay: 1.5)
                 return
             }
             let nVC = strongSelf.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController

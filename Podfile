@@ -10,6 +10,9 @@ target 'safety202102' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'EAIntroView'
+  pod 'NVActivityIndicatorView'
+  pod 'DZNEmptyDataSet'
+  pod 'PKHUD', '~>5.0'
 
   target 'safety202102Tests' do
     inherit! :search_paths

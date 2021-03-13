@@ -10,6 +10,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 import EAIntroView
+import PKHUD
 
 class SignUpViewController: UIViewController {
 
@@ -48,12 +49,10 @@ class SignUpViewController: UIViewController {
         //初回起動か否か
         isFirstStartBool = userDefaults.bool(forKey: "isFirstStart")//trueの場合は初回でない、falseの時は初回
         //初回の場合、walkthroughを表示する
-        print("isFirstStartBool", isFirstStartBool)
         if isFirstStartBool == false {
             showWalkthrough()
             userDefaults.setValue(true, forKey: "isFirstStart")
         } else {
-            print("viewdidloadだよ")
             //初回起動時でない&ログインしている状態
             if let user = Auth.auth().currentUser {
                 let userID = user.uid
@@ -137,6 +136,8 @@ class SignUpViewController: UIViewController {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("error: 認証情報保存\(String(describing: error))")
+                HUD.dimsBackground = true
+                HUD.flash(.labeledError(title: "認証エラー", subtitle: "メールアドレス・パスワード(６文字以上)を確認してください"), delay: 1.5)
                 return
             }
             //Cloud Firestoreに追加
@@ -151,7 +152,6 @@ class SignUpViewController: UIViewController {
                 "friends": [userID]
             ] as [String : Any]
             
-            print("docData:" , documentData)
             //usersのフォルダの中に、userIDが入っていて、その中にdocumentDataが貯蓄されているイメージ
             Firestore.firestore().collection("users").document(userID).setData(documentData)
             

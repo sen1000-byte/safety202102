@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import PKHUD
 
 class SettingPasswordTableViewController: UITableViewController {
     
@@ -64,7 +65,8 @@ class SettingPasswordTableViewController: UITableViewController {
         }
         
         if newPasswordTextField.text != reNewPasswordTextField.text {
-            //!!!!!!!!エラー分！！！!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            HUD.dimsBackground = true
+            HUD.flash(.labeledError(title: "エラー", subtitle: "パスワードが一致しません。再度入力してください"), delay: 1.5)
             print("パスワードが一致しません。")
             return
         } else {
@@ -74,11 +76,12 @@ class SettingPasswordTableViewController: UITableViewController {
             Auth.auth().currentUser?.updatePassword(to: password) { error in
                 //emailのエラー
                 if let error = error {
-                    //!!!!!!!!!!!!!!!!podのをインストールしたやつでエラーを表示させる！！！！！！！
+                    HUD.dimsBackground = false
+                    HUD.flash(.labeledError(title: "エラー", subtitle: "パスワードの更新ができませんでした"), delay: 1.5)
                     print("パスワードの更新に失敗しました\(error)")
                     return
                 }
-                //podの完了を出す
+                //完了
                 self.navigationController?.popViewController(animated: true)
             }
         }

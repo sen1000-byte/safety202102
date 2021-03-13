@@ -57,7 +57,9 @@ class SearchFriendViewController: UIViewController{
         //自分を検索していないか
         if friendEmail == me.email && friendUserName == me.userName {
             //!!!!!!!!!!!!!!!!!!自分を検索してます!!!!!!!!!
-            print("you are searching yourself")
+            let alert = UIAlertController(title: "エラー", message: "自分と違うアカウントを検索してください。", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
             return
         }
         
@@ -73,7 +75,9 @@ class SearchFriendViewController: UIViewController{
             if let numOfResult = snapshots?.count {
                 switch numOfResult {
                 case 0:     //見つからなかった&０と表示された
-                    print("0と表示されました")
+                    let alert = UIAlertController(title: "エラー", message: "相手が見つかりませんでした。", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                     return
                 case 1:     //正常に見つかった
                     print("1と表示されました")

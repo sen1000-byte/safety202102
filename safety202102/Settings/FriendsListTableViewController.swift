@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import DZNEmptyDataSet
 
 class FriendsListTableViewController: UITableViewController {
     
@@ -23,6 +24,9 @@ class FriendsListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.emptyDataSetDelegate = self
+        self.tableView.emptyDataSetSource = self
         
         editBarButton.tintColor = UIColor.darkGray
 //        editBarButtonItem = UIBarButtonItem(title: "編集", style: .plain, target: self, action: #selector(editBarButtonTapped))
@@ -198,24 +202,14 @@ class FriendsListTableViewController: UITableViewController {
         Firestore.firestore().collection("users").document(self.me.userID).setData(["friends": myfriendsArray], merge: true)
 
     }
+}
+
+//空の時に使えるextension
+extension FriendsListTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    //文字を設定する場合に使えるfunc
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "登録した相手はいません。「相手を探す」から相手を登録しよう")
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

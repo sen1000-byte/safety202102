@@ -10,6 +10,9 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 import EAIntroView
+import DZNEmptyDataSet
+import NVActivityIndicatorView
+import PKHUD
 
 class MainViewController: UIViewController {
     
@@ -27,6 +30,27 @@ class MainViewController: UIViewController {
     @IBOutlet var collectionViewFlowLayout: UICollectionViewFlowLayout!
     @IBOutlet var smileButton: UIButton!
     @IBOutlet var myLatestActivityTimeLabel: UILabel!
+    
+    //天気系
+    @IBOutlet var weatherMainLabel: UILabel!
+    @IBOutlet var weatherDescriptionLabel: UILabel!
+    @IBOutlet var weatherIconImageView: UIImageView!
+    @IBOutlet var tempLabel: UILabel!
+    @IBOutlet var locationTextField: UITextField!
+    var locationPickerView = UIPickerView()
+    //市の名前、IDのあるデータを持ってくる
+    var locationList = LocationList()
+    var weatherIcon = WeatherIcon()
+    //選択したlocationを記憶させておくために使用
+    var userDefaults = UserDefaults.standard
+    //選択した位置を入れるための[String]
+    var selectedLocation = [String]()    //[0]にid, [1]に名前を入れる
+    
+    //読み込み中を表示させるための変数
+    //読み込み中アニメーションのインスタンスを作る
+    var activityIndicatorView: NVActivityIndicatorView!
+    //読み込み中は触れなくするためのview
+    var backgroundView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +59,13 @@ class MainViewController: UIViewController {
         
         setUpCollectionView()
 //        setUpMeFromFirestore()
-
+        
+        //読み込み中画面を作るための設定
+        setUpActivityIndicatorVIew()
+//        view.addSubview(backgroundView)
+//        //アニメーションの開始
+//        activityIndicatorView.startAnimating()
+        
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationItem.hidesBackButton = true
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.darkGray]
@@ -58,6 +88,10 @@ class MainViewController: UIViewController {
         smileButton.layer.shadowOffset = CGSize(width: 8, height: 8)
         smileButton.layer.shadowRadius = 3
         smileButton.layer.shadowOpacity = 1
+        
+        //天気系
+        setUpFirstWeather()
+        setUpTextField()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,12 +100,20 @@ class MainViewController: UIViewController {
         setUpMeFromFirestore()
 //        collectionView.reloadData()
         
+        view.addSubview(backgroundView)
+        //アニメーションの開始
+        activityIndicatorView.startAnimating()
+        
     }
     
     func setUpCollectionView() {
         //collectionview
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        //collectionView空な時に表示させるための設定
+        collectionView.emptyDataSetDelegate = self
+        collectionView.emptyDataSetSource = self
         
         collectionView.backgroundColor = UIColor.white
         collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 8, right: 20)
@@ -85,6 +127,8 @@ class MainViewController: UIViewController {
         Firestore.firestore().collection("users").document(userID!).getDocument { (snap, error) in
             if let error = error {
                 print("firestoreからのmeへのデータの取得に失敗\(error)")
+                HUD.dimsBackground = false
+                HUD.flash(.labeledError(title: "エラー", subtitle: "データの取得ができませんでした。再度更新をしてください"), delay: 1.5)
                 return
             }
             guard let data = snap?.data() else {return}
@@ -122,6 +166,8 @@ class MainViewController: UIViewController {
             Firestore.firestore().collection("activities").document("\(me.friends[i])").getDocument { (snap, error) in
                 if let error = error {
                     print("firestoreからactivityのデータ取得に失敗しました\(error)")
+                    HUD.dimsBackground = false
+                    HUD.flash(.labeledError(title: "エラー", subtitle: "友達情報のデータの取得ができませんでした。再度更新をしてください。"), delay: 1.5)
                 }
                 guard let data = snap?.data() else {return}
                 let friend = Activity(data: data)
@@ -129,6 +175,10 @@ class MainViewController: UIViewController {
                 
                 self.collectionView.reloadData()
                 self.setUpViews()
+                
+                //読み込み中画面を終わる
+                self.backgroundView.removeFromSuperview()
+                self.activityIndicatorView.stopAnimating()
             }
         }
     }
@@ -160,9 +210,9 @@ class MainViewController: UIViewController {
         if  timeStamp != Timestamp(seconds: 0, nanoseconds: 0) {
             let latestetActiveTime: Date = timeStamp.dateValue()
             smileButton.setImage(compareDate(fromDate: latestetActiveTime), for: .normal)
-            myLatestActivityTimeLabel.text = self.dateFormatter.string(from: latestetActiveTime)
+            myLatestActivityTimeLabel.text = "更新時刻：　" + self.dateFormatter.string(from: latestetActiveTime)
         }else{
-            myLatestActivityTimeLabel.text = ""
+            myLatestActivityTimeLabel.text = "更新時刻：　"
             smileButton.setImage(UIImage(named: "smileloading"), for: .normal)
         }
     }
@@ -172,13 +222,83 @@ class MainViewController: UIViewController {
 //    }
     
     
+    //textFieldの最初の設定をする
+    func setUpTextField() {
+        locationTextField.delegate = self
+        locationPickerView.delegate = self
+        locationPickerView.dataSource = self
+        
+        //キーボードにdoneボタンをつける
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 43))
+        let spaceItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        toolbar.setItems([spaceItem,doneItem], animated: true)
+        
+        
+        //pickerviewとtagtextfieldを連携
+        locationTextField.inputView = locationPickerView
+        locationTextField.inputAccessoryView = toolbar
+    }
+    
+    //weatherのラベルの最初の表示を設定する
+    func setUpFirstWeather() {
+        
+        selectedLocation = userDefaults.array(forKey: "weather") as? [String] ?? []
+        
+        //もしデータの個数が２個でなければ初期化する
+        if selectedLocation.count != 2 {
+            //selecetdLocationを初期化
+            selectedLocation = []
+            locationTextField.text = ""
+            
+        }else {
+            locationTextField.text = selectedLocation[1]
+        }
+        
+        weatherMainLabel.text = ""
+        weatherDescriptionLabel.text = ""
+        tempLabel.text = "スマイルボタンを\n押して天気を取得"
+        weatherIconImageView.image = UIImage(named: "")
+        
+    }
+    
+    func setUpActivityIndicatorVIew() {
+        // 設定
+        activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70), type: NVActivityIndicatorType.cubeTransition, color: UIColor.darkGray, padding: 0)
+         backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        backgroundView.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.6)
+        activityIndicatorView.center = self.view.center // 位置を中心に設定
+        //subviewに追加
+        view.addSubview(activityIndicatorView)
+    }
+    
+    
+    
+    
+    
     @IBAction func smile() {
+        
+        //読み込み画面の開始
+        view.addSubview(backgroundView)
+        //アニメーションの開始
+        activityIndicatorView.startAnimating()
+        
+        
+        
         let latestActiveTime = Timestamp()
         Firestore.firestore().collection("activities").document("\(me.userID)").setData(["latestActiveTime": latestActiveTime], merge: true)
         smileButton.setImage(UIImage(named: "smile"), for: .normal)
-        myLatestActivityTimeLabel.text = dateFormatter.string(from: latestActiveTime.dateValue())
+        myLatestActivityTimeLabel.text = "更新時刻：　" + dateFormatter.string(from: latestActiveTime.dateValue())
         //情報の更新
         setUpMeFromFirestore()
+        
+        //天気の取得
+        //もしもselectedLocationが設定できていない時にエラーを出す
+        if selectedLocation.count != 2 {
+            print("selectedLocationが設定できていません。", selectedLocation)
+        }else {
+            getWeather(id: selectedLocation[0])
+        }
     }
     
     @objc func settingBarButtonTapped() {
@@ -212,6 +332,71 @@ class MainViewController: UIViewController {
     func reloadView() {
         setUpMeFromFirestore()
     }
+    
+    //天気系
+    func getWeather(id: String) {
+        let baseURL = "https://api.openweathermap.org/data/2.5/forecast?"
+        let LocationID = id
+        let myAPIKey = "180f7e1927b7948af30cc82b95fc6dad"
+        let weatherURL = baseURL + "id=\(LocationID)&units=metric&lang=ja&cnt=1&appid=\(myAPIKey)"
+
+        //weatherURLをString型からURL型に変更する
+        if let url = URL(string: weatherURL) {
+            //データを取得するためのurlsessionを作成する
+            let urlSession = URLSession(configuration: .default)
+            
+            //データを取ってくる
+            let getWeatherData = urlSession.dataTask(with: url){ (data, response, error) in
+                if error != nil {
+                    print("urlからのデータの取得に失敗しました", error!)
+                    HUD.dimsBackground = false
+                    HUD.flash(.labeledError(title: "エラー", subtitle: "天気情報の取得ができませんでした。再度更新してください。"), delay: 1.5)
+                    return
+                }
+                if let loadedData = data {
+                    
+                    self.getJSONdata(weatherData: loadedData)
+                }
+            }
+            //実行する
+            getWeatherData.resume()
+            
+        } else {
+            print("urlの取得に失敗しました")
+            HUD.dimsBackground = false
+            HUD.flash(.labeledError(title: "エラー", subtitle: "天気情報の取得ができませんでした。再度更新してください。"), delay: 1.5)
+            return
+        }
+    }
+    
+    //読み込んだJSONデータを解読する
+    func getJSONdata(weatherData: Data) {
+        //解読するdecoderを作る
+        let decoder = JSONDecoder()
+        //エラーが起きることがる想定される時の書き方
+        do {
+            let decodedData = try decoder.decode(weatherDecoaded.self, from: weatherData)
+            //バックグラウンドじゃないところで行う
+            DispatchQueue.main.sync {
+                //エラーがない時実行される（解読できてweatherDecoadedの形に当てはまるよっていう時）
+                weatherMainLabel.text = decodedData.list[0].weather[0].main
+                weatherDescriptionLabel.text = "(" + decodedData.list[0].weather[0].weatherDescription + ")"
+                weatherIconImageView.image = weatherIcon.selectIcon(icon: decodedData.list[0].weather[0].icon, main: decodedData.list[0].weather[0].main)
+                weatherIconImageView.tintColor = weatherIcon.selectIconColor(icon: decodedData.list[0].weather[0].icon)
+                tempLabel.text = String(decodedData.list[0].main.temp) + "℃"
+            }
+        } catch  let error{
+            //エラーがあるとcatchの中を行う
+            print("decodeに失敗しました \(error)")
+            HUD.dimsBackground = false
+            HUD.flash(.labeledError(title: "エラー", subtitle: "天気情報の取得ができませんでした。再度更新してください。"), delay: 1.5)
+            
+        }
+        
+    }
+    
+
+    
 }
 
 //MARK: -extensions
@@ -254,6 +439,63 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
 }
+
+//天気系
+//PickerViewとTextFieldのextension
+extension MainViewController: UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    @objc func done() {
+        locationTextField.resignFirstResponder()
+        //userDefaultsにLocationを保存する
+        userDefaults.setValue(selectedLocation, forKey: "weather")
+        weatherMainLabel.text = ""
+        weatherDescriptionLabel.text = ""
+        tempLabel.text = "スマイルボタンを\n押して天気を取得"
+        weatherIconImageView.image = UIImage(named: "")
+        
+    }
+    
+    //pickerの列の数
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    //pickerの行の列
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return locationList.list.count
+    }
+    
+    //pickerの列のタイトル
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return locationList.list[row].name
+    }
+    
+    //pickerで選択した時
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        locationTextField.text = locationList.list[row].name
+        
+        //selectedLocationを初期化して代入
+        selectedLocation = []
+        selectedLocation.append(String(locationList.list[row].id))
+        selectedLocation.append(locationList.list[row].name)
+    }
+}
+
+//collectionViewが空の時に使えるextension 
+extension MainViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    
+    //collectionViewが空な時に発動してくれる
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "smile")
+    }
+    
+    //文字を設定する場合に使えるfunc
+//    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+//        return NSAttributedString(string: "データがありません")
+//    }
+}
+
+
 
 //walkthroughを表示させるためのextension
 extension MainViewController: EAIntroDelegate {
